@@ -19,10 +19,11 @@ This module can  be used as a basis to create your own section to manage the Fue
 
 # Installation
 
-1. Clone or download the fuel-module-menu repository
-2. Move it into your module folder, and rename it to "menu"
-3. Open your oil console
-4. Run `oil refine menu::menu:install [your_public_folder] [your_theme]` to generate needed files (copy js and css files in assets folder). 
+1. This module uses Theme class, you must create your theme folder.
+2. Clone or download the fuel-module-menu repository
+3. Move it into your module folder, and rename it to "menu"
+4. Open your oil console
+5. Run `oil refine menu::menu:install [your_public_folder] [your_theme]` to generate needed files (copy js and css files in assets folder). 
 * [your_public_folder] is optionnally if your public folder is not named "public"
 * [your_theme] is if you use a theme other than the default theme
 
@@ -101,7 +102,11 @@ Access the backoffice at : http://your-fuel-url/menu/backend
 
 # Error
 
-* "Fuel\Core\ThemeException [ Error ]: Theme "default" could not be found." It's because this module uses Themes for better flexibility. You must create a theme folder, by default it's DOCROOT/themes/default.
+- Fuel\Core\ThemeException [ Error ]: Theme "default" could not be found.
+It's because this module uses Themes for better flexibility. You must create a theme folder, by default it's DOCROOT/themes/default.
+
+- ErrorException [ Fatal Error ]: Class 'Controller_Base_Backend' not found.
+It's because the controller \Menu\Controller_Backend need to extends your admin controller in your project. In my case, the admin controller is named \Controller_Base_Backend
 
 # Override Theme
 
