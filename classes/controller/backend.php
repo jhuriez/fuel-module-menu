@@ -2,7 +2,7 @@
 
 namespace Menu;
 
-class Controller_Backend extends \Controller_Base_Backendtwo
+class Controller_Backend extends \Controller_Base_Backend
 {
     public $module = 'menu';
     public $dataGlobal = array();
