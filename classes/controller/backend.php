@@ -86,14 +86,16 @@ class Controller_Backend extends \Controller_Base_Backend
 
     public function addAsset($files, $type, $group, $attr = array(), $raw = false)
     {
+        $group = (\Config::get('menu.module.assets.'.$group) ? : $group);
+
         if ($this->use_casset)
         {
             foreach((array)$files as $file)
-                \Casset::{$type}('theme::'.$file, false, (\Config::get('menu.module.assets.'.$group) ? : $group));
+                \Casset::{$type}('theme::'.$file, false, $group);
         }
         else
         {
-            $this->theme->asset->{$type}($files, $attr, (\Config::get('menu.module.assets.'.$group) ? : $group), $raw);
+            $this->theme->asset->{$type}($files, $attr, $group, $raw);
         }
     }
 }
