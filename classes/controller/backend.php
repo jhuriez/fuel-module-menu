@@ -16,6 +16,11 @@ class Controller_Backend extends \Controller_Base_Backend
         {
             parent::before();
         }
+        // Load package
+        \Package::load('lbMenu');
+
+        // Load Config
+        \Config::load('menu', true);
         
         // Load language
         \Lang::load('menu', true);
@@ -23,11 +28,8 @@ class Controller_Backend extends \Controller_Base_Backend
         // Message class exist ?
         $this->use_message = class_exists('\Messages');
 
-        // Load package
-        \Package::load('lbMenu');
-
-        // Load Config
-        \Config::load('menu', true);
+        // Use Casset ?
+        $this->use_casset = \Config::get('menu.module.use_casset');
 
         // Set Media
         $this->setModuleMedia();
@@ -35,44 +37,63 @@ class Controller_Backend extends \Controller_Base_Backend
 
     public function setModuleMedia()
     {
+        if ($this->use_casset)
+        {
+            $activeTheme = $this->theme->active();
+            \Casset::add_path('theme', $activeTheme['asset_base']);
+        }
+
         // Jquery
         if (\Config::get('menu.module.force_jquery'))
         {
-            $this->theme->asset->js(array(
+            $this->addAsset(array(
                 'modules/' . $this->module . '/jquery.min.js',
                 'modules/' . $this->module . '/jquery-ui.min.js',
-            ), array(), \Config::get('menu.module.assets.js_core') ? : 'js_core', false); 
+            ), 'js', 'js_core');
         }
 
         // Bootstrap
         if (\Config::get('menu.module.force_bootstrap'))
         {
-            $this->theme->asset->css(array(
+            $this->addAsset(array(
                 'modules/' . $this->module . '/bootstrap/css/bootstrap.css',
                 'modules/' . $this->module . '/bootstrap/css/bootstrap-glyphicons.css',
-            ), array(), \Config::get('menu.module.assets.css') ? : 'css_plugin', false);
+            ), 'css', 'css_plugin');
 
-            $this->theme->asset->js(array(
+            $this->addAsset(array(
                 'modules/' . $this->module . '/bootstrap.js',
-            ), array(), \Config::get('menu.module.assets.js_core') ? : 'js_core', false); 
+            ), 'js', 'js_core');
         }
 
         // Fontawesome
         if (\Config::get('menu.module.force_font-awesome'))
         {
-            $this->theme->asset->css(array(
+            $this->addAsset(array(
                 'modules/' . $this->module . '/font-awesome/css/font-awesome.css',
-            ), array(), \Config::get('menu.module.assets.css') ? : 'css_plugin', false);
+            ), 'css', 'css_plugin');
         }
 
         // Add dynatree, bootbox plugin
-        $this->theme->asset->css(array(
+        $this->addAsset(array(
             'modules/' . $this->module . '/plugins/dynatree/skin/ui.dynatree.css',
-        ), array(), \Config::get('menu.module.assets.css') ? : 'css_plugin', false);
+        ), 'css', 'css_plugin');
 
-        $this->theme->asset->js(array(
+        $this->addAsset(array(
             'modules/' . $this->module . '/plugins/dynatree/jquery.dynatree.js',
             'modules/' . $this->module . '/plugins/bootbox/bootbox.js',
-        ), array(), \Config::get('menu.module.assets.js_plugin') ? : 'js_plugin', false);
+        ), 'js', 'js_plugin');
+    }
+
+    public function addAsset($files, $type, $group, $attr = array(), $raw = false)
+    {
+        if ($this->use_casset)
+        {
+            foreach((array)$files as $file)
+                \Casset::{$type}('theme::'.$file, false, (\Config::get('menu.module.assets.'.$group) ? : $group));
+        }
+        else
+        {
+            $this->theme->asset->{$type}($files, $attr, (\Config::get('menu.module.assets.'.$group) ? : $group), $raw);
+        }
     }
 }
