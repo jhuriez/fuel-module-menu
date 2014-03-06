@@ -65,11 +65,11 @@ class Controller_Backend_Index extends \Menu\Controller_Backend
         $menu = \LbMenu\Model_Menu::find($this->param('id'));
         if (\LbMenu\Helper_Menu::delete($menu))
         {
-            $this->useMessage and \Messages::success(__('menu.message.deleted'));
+            $this->use_message and \Messages::success(__('menu.message.deleted'));
         }
         else
         {
-            $this->useMessage and \Messages::error(__('menu.error'));
+            $this->use_message and \Messages::error(__('menu.error'));
         }
 
         \Response::redirect_back(\Router::get('menu_backend_menu'));
@@ -196,23 +196,23 @@ class Controller_Backend_Index extends \Menu\Controller_Backend
                 if ($saveArr['response'])
                 {
                     if ($isUpdate)
-                        $this->useMessage and \Messages::success(__('menu.message.edited'));
+                        $this->use_message and \Messages::success(__('menu.message.edited'));
                     else
-                        $this->useMessage and \Messages::success(__('menu.message.added'));
+                        $this->use_message and \Messages::success(__('menu.message.added'));
 
                     $redirectLink = ($parentId == 'none' || !$parentId) ? \Router::get('menu_backend_menu') : 
                                                                           \Router::get('menu_backend_submenu', array('id' => $parentId));
                     \Response::redirect_back($redirectLink);
                 } else
                 {
-                    $this->useMessage and \Messages::error(__('menu.error'));
+                    $this->use_message and \Messages::error(__('menu.error'));
                 }
             }
             else
             {
                 foreach ($form->validation()->error() as $error)
                 {
-                    $this->useMessage and \Messages::error($error);
+                    $this->use_message and \Messages::error($error);
                 }
             }
         }
