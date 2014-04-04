@@ -39,6 +39,8 @@ In `modules/menu/classes/controller/backend.php` at line 5 :
   class Controller_Backend extends \Controller_Base_Backend
 ```
 
+You can see an example of a simple controller using theme here : [`menu/example/simple_controller.php`](https://github.com/jhuriez/fuel-module-menu/blob/master/example/simple_controller.php)
+
 ## Theme
 
 It uses the Theme class from FuelPHP, consequently you need to have a theme for your administration.
@@ -108,6 +110,9 @@ It's because this module uses Themes for better flexibility. You must create a t
 
 - ErrorException [ Fatal Error ]: Class 'Controller_Base_Backend' not found.
 It's because the controller \Menu\Controller_Backend need to extends your admin controller in your project. In my case, the admin controller is named \Controller_Base_Backend
+
+- JS and CSS files are not loaded!
+Be sure you have enabled 'force_jquery', 'force_bootstrap' and 'force_font-awesome' in config menu file, for load js&css files. 
 
 # Override Theme
 
