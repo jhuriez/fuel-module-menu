@@ -16,7 +16,7 @@ class Controller_Simple extends \Controller_Hybrid
             $this->template = '';
             return parent::before();
         }
-        else
+        else if (!\Request::is_hmvc())
         {
             $this->theme->set_template($this->template);
         }
