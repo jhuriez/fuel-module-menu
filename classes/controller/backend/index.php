@@ -94,6 +94,9 @@ class Controller_Backend_Index extends \Menu\Controller_Backend
         // Forge Menu fieldset
         $form = \Fieldset::forge('menuForm', array('form_attributes' => array('class' => 'form-horizontal')));
         $form->add_model('LbMenu\\Model_Menu');
+        $form->field('perm')->add_rule('match_pattern', '/^.*\..*$/')
+                            ->set_error_message('match_pattern', ':label rights where not formatted proppery. Formatting should be like area.right or area.[right, other_right].');
+
         $form->add('add', '', array('type' => 'submit', 'value' => ($isUpdate) ? __('menu.edit')
                         : __('menu.add'), 'class' => 'btn btn-primary'));
 
@@ -181,6 +184,7 @@ class Controller_Backend_Index extends \Menu\Controller_Backend
                     'link' => $form->validated('link'),
                     'is_blank' => $form->validated('is_blank'),
                     'theme' => $form->validated('theme'),
+                    'perm' => $form->validated('perm'),
                     'use_router' => $form->validated('use_router'),
                     'named_params' => $params,
                     'text' => $formLang->validated('text'),

@@ -11,6 +11,7 @@
             <?php if($parent_id == 'none'): ?>
               <?= $form->field('theme')->set_attribute(array('class' => 'form-control')); ?> 
             <?php endif; ?>
+            <?= $form->field('perm')->set_attribute(array('class' => 'form-control')); ?>
             <?= $form->field('is_blank')->set_attribute(array('class' => 'form-control')); ?>
         </div>
 
