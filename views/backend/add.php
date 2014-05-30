@@ -1,57 +1,71 @@
 <?= \Form::open(array('role' => 'form', 'class' => 'form-horizontal')); ?>
 <div class="row">
     <div class="col-lg-6">
-        <h3><?= __('menu.menu.config'); ?></h3>
-        <div class="well">
-            <?= $formLang->field('language')->set_attribute(array('class' => 'form-control')); ?>
-            <?= $form->field('slug')->set_attribute(array('class' => 'form-control')); ?>
-            <?= $formLang->field('text')->set_attribute(array('class' => 'form-control')); ?>
-            <?= $formLang->field('title')->set_attribute(array('class' => 'form-control')); ?>
-            <?= $formLang->field('small_desc')->set_attribute(array('class' => 'form-control')); ?>
-            <?php if($parent_id == 'none'): ?>
-              <?= $form->field('theme')->set_attribute(array('class' => 'form-control')); ?> 
-            <?php endif; ?>
-            <?= $form->field('perm')->set_attribute(array('class' => 'form-control')); ?>
-            <?= $form->field('is_blank')->set_attribute(array('class' => 'form-control')); ?>
-        </div>
+      <section class="panel panel-default">
+          <div class="panel-heading">
+            <h3><?= __('menu.menu.config'); ?></h3>
+          </div>
 
-        <h3><?= __('menu.menu.link'); ?></h3>
-        <div class="well">
-          <?= $form->field('use_router')->set_attribute(array('class' => 'form-control')); ?>
-          <?= $form->field('link')->set_attribute(array('class' => 'form-control')); ?>
-
-          <div class="named_params">
-            <h3><?= __('menu_model_menu.named_params'); ?></span></h3>
-            <div class="list-group named_params_container">
-              <?php foreach((array)$params as $param): ?>
-                <?php $el = str_replace('__id__', uniqid(), \Theme::instance()->view('backend/_prototype/add_param')->set($param)->render()); ?>
-                <?= $el; ?>
-              <?php endforeach; ?>
+          <div class="panel-body">
+            <div class="well">
+                <?= $formLang->field('language')->set_attribute(array('class' => 'form-control')); ?>
+                <?= $form->field('slug')->set_attribute(array('class' => 'form-control')); ?>
+                <?= $formLang->field('text')->set_attribute(array('class' => 'form-control')); ?>
+                <?= $formLang->field('title')->set_attribute(array('class' => 'form-control')); ?>
+                <?= $formLang->field('small_desc')->set_attribute(array('class' => 'form-control')); ?>
+                <?php if($parent_id == 'none'): ?>
+                  <?= $form->field('theme')->set_attribute(array('class' => 'form-control')); ?> 
+                <?php endif; ?>
+                <?= $form->field('perm')->set_attribute(array('class' => 'form-control')); ?>
+                <?= $form->field('is_blank')->set_attribute(array('class' => 'form-control')); ?>
             </div>
-            <a href="#" class="btn btn-info" id="menu_add_param" data-prototype="<?= e(\Theme::instance()->view('backend/_prototype/add_param')->render()); ?>"><?= __('menu.action.add_param'); ?></a>
-          </div>
-        </div>
-        <br/>
 
-        <section <?php if(empty($eav)) echo 'style="display: none;"'; ?> id="eav" data-prototype="<?= e(\Theme::instance()->view('backend/_prototype/add_attribute')->render()); ?>">
-          <h3 class="eav"><?= __('menu.menu.attributes'); ?>  : <span class="theme_name"><?= $themeName; ?></h3>
-          <div class="eav well" id="eav_container">
-            <?php foreach((array)$eav as $attribute): ?>
-                <?php $el = \Theme::instance()->view('backend/_prototype/add_attribute')->set($attribute)->render(); ?>
-                <?= $el; ?>
-            <?php endforeach; ?>
-          </div>
-        </section>
+            <h3><?= __('menu.menu.link'); ?></h3>
+            <div class="well">
+              <?= $form->field('use_router')->set_attribute(array('class' => 'form-control')); ?>
+              <?= $form->field('link')->set_attribute(array('class' => 'form-control')); ?>
 
-        <input type="hidden" id="id_menu" value="<?= $menu->id; ?>" />
-        <?= $form->field('add'); ?>
+              <div class="named_params">
+                <h3><?= __('menu_model_menu.named_params'); ?></h3>
+                <div class="list-group named_params_container">
+                  <?php foreach((array)$params as $param): ?>
+                    <?php $el = str_replace('__id__', uniqid(), \Theme::instance()->view('backend/_prototype/add_param')->set($param)->render()); ?>
+                    <?= $el; ?>
+                  <?php endforeach; ?>
+                </div>
+                <a href="#" class="btn btn-info" id="menu_add_param" data-prototype="<?= e(\Theme::instance()->view('backend/_prototype/add_param')->render()); ?>"><?= __('menu.action.add_param'); ?></a>
+              </div>
+            </div>
+            <br/>
+
+            <section <?php if(empty($eav)) echo 'style="display: none;"'; ?> id="eav" data-prototype="<?= e(\Theme::instance()->view('backend/_prototype/add_attribute')->render()); ?>">
+              <h3 class="eav"><?= __('menu.menu.attributes'); ?>  : <span class="theme_name"><?= $themeName; ?></span></h3>
+              <div class="eav well" id="eav_container">
+                <?php foreach((array)$eav as $attribute): ?>
+                    <?php $el = \Theme::instance()->view('backend/_prototype/add_attribute')->set($attribute)->render(); ?>
+                    <?= $el; ?>
+                <?php endforeach; ?>
+              </div>
+            </section>
+
+            <input type="hidden" id="id_menu" value="<?= $menu->id; ?>" />
+            <?= $form->field('add'); ?>
+            </div>
+            </section>
     </div>
 
     <?php if($parent_id != 'none'): ?>
         <div class="col-lg-6">
-            <h2><?= __('menu.menu.select_parent') ?></h2>
-            <div id="tree" name="tree"></div>
-            <input type="hidden" name="activeNode" id="activeNode" value="<?= $parent_id ?>"/>
+          <section class="panel panel-default">
+            <div class="panel-heading">
+              <h3><?= __('menu.menu.select_parent') ?></h3>
+            </div>
+
+            <div class="panel-body">
+              <div id="tree" name="tree"></div>
+              <input type="hidden" name="activeNode" id="activeNode" value="<?= $parent_id ?>"/>
+            </div>
+          </section>
         </div>
     <?php endif; ?>
 </div>
