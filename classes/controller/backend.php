@@ -2,7 +2,7 @@
 
 namespace Menu;
 
-class Controller_Backend extends \Controller_Base_Backend
+class Controller_Backend extends \Backend\Controller_Backend
 {
     public $module = 'menu';
     public $dataGlobal = array();
@@ -37,6 +37,12 @@ class Controller_Backend extends \Controller_Base_Backend
 
     public function setModuleMedia()
     {
+        if ($this->casset)
+        {
+            $activeTheme = $this->theme->active();
+            \Casset::add_path('theme', $activeTheme['asset_base']);
+        }
+        
         is_callable('parent::setModuleMedia') and parent::setModuleMedia();
 
         // Add dynatree, bootbox plugin
