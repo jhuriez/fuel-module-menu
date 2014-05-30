@@ -6,6 +6,7 @@ class Controller_Backend extends \Backend\Controller_Backend
 {
     public $module = 'menu';
     public $dataGlobal = array();
+    public $media = false;
 
     public function before() {
         if (\Input::is_ajax())
@@ -37,12 +38,15 @@ class Controller_Backend extends \Backend\Controller_Backend
 
     public function setModuleMedia()
     {
+        // If media already set
+        if ($this->media) return true;
+
         if ($this->casset)
         {
             $activeTheme = $this->theme->active();
             \Casset::add_path('theme', $activeTheme['asset_base']);
         }
-        
+
         is_callable('parent::setModuleMedia') and parent::setModuleMedia();
 
         // Add dynatree, bootbox plugin
@@ -54,6 +58,8 @@ class Controller_Backend extends \Backend\Controller_Backend
             'modules/menu/plugins/dynatree/jquery.dynatree.js',
             'modules/menu/plugins/bootbox/bootbox.js',
         ), 'js', 'js_plugin', $this->theme, $this->casset);
+
+        $this->media = true;
     }
 
 }
