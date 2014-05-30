@@ -20,10 +20,11 @@ This module can  be used as a basis to create your own section to manage the Fue
 # Installation
 
 1. This module uses Theme class, you must create your theme folder.
-2. Clone or download the fuel-module-menu repository
-3. Move it into your module folder, and rename it to "menu"
-4. Open your oil console
-5. Run `oil refine menu::menu:install [your_public_folder] [your_theme]` to generate needed files (copy js and css files in assets folder). 
+2. You need to install the Lb Package : [See more]()
+3. Clone or download the fuel-module-menu repository
+4. Move it into your module folder, and rename it to "menu"
+5. Open your oil console
+6. Run `oil refine menu::menu:install [your_public_folder] [your_theme]` to generate needed files (copy js and css files in assets folder). 
 * [your_public_folder] is optionnally if your public folder is not named "public"
 * [your_theme] is if you use a theme other than the default theme
 
@@ -45,6 +46,9 @@ You can see an example of a simple controller using theme here : [`menu/example/
 
 It uses the Theme class from FuelPHP, consequently you need to have a theme for your administration.
 
+You need to load jQuery and jQuery UI, and optionnaly Twitter Bootstrap v3 + Font Awesome
+For this, see the docs in Lb Package wiki : [Here]()
+
 ## Implementation
 
 All variables used in the template file from theme :
@@ -54,33 +58,8 @@ All variables used in the template file from theme :
 * `<?= \Theme::instance()->asset->render('css_plugin'); ?>` in the head
 * `<?= \Theme::instance()->asset->render('js_core'); ?>` in the head
 * `<?= \Theme::instance()->asset->render('js_plugin'); ?>` in the footer
-* Your need to load jQuery and jQuery UI, and optionnaly Twitter Bootstrap v3
 
 You can see an example of template here : [`menu/example/template.php`](https://github.com/jhuriez/fuel-module-menu/blob/master/example/template.php)
-
-## Config file
-
-file menu.php in `app/config` :
-
-```php
-return array(
-	...,
-	'module' => array(
-		'use_casset' => false, // If you use Casset instead of Asset
-		'force_jquery' => false, // Load jQuery library
-		'force_bootstrap' => false, // Load Bootstrap library (js and css)
-		'force_font-awesome' => false, // Load FontAwesome library
-		'assets' => array(
-			'css_plugin' => 'css', // Set the asset group "css" instead of "css_plugin",
-		),
-	),
-	...,
-);
-```
-
-## Change assets groups name
-
-In your theme you don't want to use the asset group "css_plugin", but just "css" ? No problem, you can change it in the config file !
 
 ## External library
 
@@ -88,16 +67,6 @@ The module load automatically 2 js libraries :
 
 * dynatree => For generate a tree ui
 * bootbox => For modal confirmation
-
-### jQuery
-
-The module need jQuery et jQuery UI external libraries. If you have already these libraries in your theme, it's good.
-
-But if you want to force to load the jquery library, you need to set "force_jquery" at true in the menu config file.
-
-### Bootstrap & FontAwesome
-
-This is the same for Bootstrap and Fontawesome librairies 
 
 # Usage
 
@@ -110,9 +79,6 @@ It's because this module uses Themes for better flexibility. You must create a t
 
 - ErrorException [ Fatal Error ]: Class 'Controller_Base_Backend' not found.
 It's because the controller \Menu\Controller_Backend need to extends your admin controller in your project. In my case, the admin controller is named \Controller_Base_Backend
-
-- JS and CSS files are not loaded!
-Be sure you have enabled 'force_jquery', 'force_bootstrap' and 'force_font-awesome' in config menu file, for load js&css files. 
 
 # Override Theme
 

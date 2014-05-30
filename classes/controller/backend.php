@@ -29,7 +29,7 @@ class Controller_Backend extends \Controller_Base_Backend
         $this->use_message = class_exists('\Messages');
 
         // Use Casset ?
-        $this->use_casset = \Config::get('menu.module.use_casset');
+        $this->casset = \Config::get('lb.theme.use_casset');
 
         // Set Media
         $this->setModuleMedia();
@@ -37,65 +37,17 @@ class Controller_Backend extends \Controller_Base_Backend
 
     public function setModuleMedia()
     {
-        if ($this->use_casset)
-        {
-            $activeTheme = $this->theme->active();
-            \Casset::add_path('theme', $activeTheme['asset_base']);
-        }
-
-        // Jquery
-        if (\Config::get('menu.module.force_jquery'))
-        {
-            $this->addAsset(array(
-                'modules/' . $this->module . '/jquery.min.js',
-                'modules/' . $this->module . '/jquery-ui.min.js',
-            ), 'js', 'js_core');
-        }
-
-        // Bootstrap
-        if (\Config::get('menu.module.force_bootstrap'))
-        {
-            $this->addAsset(array(
-                'modules/' . $this->module . '/bootstrap/css/bootstrap.css',
-                'modules/' . $this->module . '/bootstrap/css/bootstrap-glyphicons.css',
-            ), 'css', 'css_plugin');
-
-            $this->addAsset(array(
-                'modules/' . $this->module . '/bootstrap.js',
-            ), 'js', 'js_core');
-        }
-
-        // Fontawesome
-        if (\Config::get('menu.module.force_font-awesome'))
-        {
-            $this->addAsset(array(
-                'modules/' . $this->module . '/font-awesome/css/font-awesome.css',
-            ), 'css', 'css_plugin');
-        }
+        is_callable('parent::setModuleMedia') and parent::setModuleMedia();
 
         // Add dynatree, bootbox plugin
-        $this->addAsset(array(
-            'modules/' . $this->module . '/plugins/dynatree/skin/ui.dynatree.css',
-        ), 'css', 'css_plugin');
+        \Lb\Backend::addAsset(array(
+            'modules/menu/plugins/dynatree/skin/ui.dynatree.css',
+        ), 'css', 'css_plugin', $this->theme, $this->casset);
 
-        $this->addAsset(array(
-            'modules/' . $this->module . '/plugins/dynatree/jquery.dynatree.js',
-            'modules/' . $this->module . '/plugins/bootbox/bootbox.js',
-        ), 'js', 'js_plugin');
+        \Lb\Backend::addAsset(array(
+            'modules/menu/plugins/dynatree/jquery.dynatree.js',
+            'modules/menu/plugins/bootbox/bootbox.js',
+        ), 'js', 'js_plugin', $this->theme, $this->casset);
     }
 
-    public function addAsset($files, $type, $group, $attr = array(), $raw = false)
-    {
-        $group = (\Config::get('menu.module.assets.'.$group) ? : $group);
-
-        if ($this->use_casset)
-        {
-            foreach((array)$files as $file)
-                \Casset::{$type}('theme::'.$file, false, $group);
-        }
-        else
-        {
-            $this->theme->asset->{$type}($files, $attr, $group, $raw);
-        }
-    }
 }
