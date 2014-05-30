@@ -20,7 +20,7 @@ This module can  be used as a basis to create your own section to manage the Fue
 # Installation
 
 1. This module uses Theme class, you must create your theme folder.
-2. You need to install the Lb Package : [See more]()
+2. You need to install the Lb Package : [See more](http://github.com/jhuriez/fuel-lb-package)
 3. Clone or download the fuel-module-menu repository
 4. Move it into your module folder, and rename it to "menu"
 5. Open your oil console
@@ -40,14 +40,14 @@ In `modules/menu/classes/controller/backend.php` at line 5 :
   class Controller_Backend extends \Controller_Base_Backend
 ```
 
-You can see an example of a simple controller using theme here : [`menu/example/simple_controller.php`](https://github.com/jhuriez/fuel-module-menu/blob/master/example/simple_controller.php)
+You can see an example of a simple controller using theme here : [`menu/example/simple_controller.php`](http://github.com/jhuriez/fuel-lb-package/blob/master/example/simple_controller.php)
 
 ## Theme
 
 It uses the Theme class from FuelPHP, consequently you need to have a theme for your administration.
 
 You need to load jQuery and jQuery UI, and optionnaly Twitter Bootstrap v3 + Font Awesome
-For this, see the docs in Lb Package wiki : [Here]()
+For this, see the docs in Lb Package wiki : [Here](http://github.com/jhuriez/fuel-lb-package/blob/master/wiki/theme.md)
 
 ## Implementation
 
@@ -59,7 +59,7 @@ All variables used in the template file from theme :
 * `<?= \Theme::instance()->asset->render('js_core'); ?>` in the head
 * `<?= \Theme::instance()->asset->render('js_plugin'); ?>` in the footer
 
-You can see an example of template here : [`menu/example/template.php`](https://github.com/jhuriez/fuel-module-menu/blob/master/example/template.php)
+You can see an example of template here : [`menu/example/template.php`](http://github.com/jhuriez/fuel-lb-package/blob/master/example/template.php)
 
 ## External library
 
